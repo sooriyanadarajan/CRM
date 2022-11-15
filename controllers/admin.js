@@ -15,7 +15,17 @@ class AdminController {
             list,
             count,
         }
-        return res.status(200).json({ success: true, data: output, message: "Task Listed !" });
+        return res.status(200).json({ success: true, data: output, message: "Admin Listed !" });
+    }
+
+    async update(req, res) {
+        let update = await Admin.updateOne({ _id: req.body._id }, req.body);
+        return res.status(200).json({ success: true, data: update, message: "Admin Updated" })
+
+    }
+    async delete(req, res) {
+        let remove = await Admin.deleteOne(req.body._id)
+        return res.status(200).json({ success: true, data: remove, message: "Admin Deleted" })
     }
 }
 

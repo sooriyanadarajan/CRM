@@ -7,6 +7,6 @@ const adminactivitycontroller = new Adminactivitycontroller();
 
 const router = express.Router()
 
-router.post('/create',  asyncHandler(adminactivitycontroller.create))
+router.post('/adminactivity/create',  asyncHandler(adminactivitycontroller.create))
 
 module.exports = router

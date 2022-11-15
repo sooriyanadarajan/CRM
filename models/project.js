@@ -1,25 +1,14 @@
 const mongoose = require('mongoose');
 
-var adminSchema = mongoose.Schema({
+var projectSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
     },
-    role: {
-        type: String,
-        required: true,
+    expiry: {
+        type: Boolean,
+        default: false
     },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    password:{
-        type:String,
-        required: true,
-        minlength:8,
-    },
-    
     status: {
         type: String,
         default: 0,
@@ -32,6 +21,6 @@ var adminSchema = mongoose.Schema({
     },
 }, { timestamps: true });
 
-module.exports = mongoose.model('admin', adminSchema);
+var Project = mongoose.model('project', projectSchema);
 
-// module.exports = Admin;
+module.exports = Project;

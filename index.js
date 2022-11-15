@@ -1,14 +1,15 @@
 require('dotenv').config({ path: __dirname + '/config/.env' })
 const express = require('express')
 require('./config/db')
-
-const taskRouter = require('./routers/task')
+const userRouter = require('./routers/user')
 const userActivityRouter = require('./routers/userActivity')
-const AdminactivityRouter=require('./routers/adminactivity')
-const userRouter=require('./routers/user')
 const adminRouter = require('./routers/admin')
+const AdminactivityRouter=require('./routers/adminactivity')
 const teamRouter = require('./routers/team')
-const meetingRouter = require("./routers/meeting")
+const projectRouter=require('./routers/project')
+const taskRouter = require('./routers/task')
+const meeetingRouter = require('./routers/meeting')
+
 const app = express()
 app.use(express.json())
 
@@ -27,18 +28,17 @@ app.use(function (req, res, next) {
     next();
 })
 
-app.use("/task",taskRouter);
-
-app.use("/user",userRouter);
-app.use("/meeting",meetingRouter)
-app.use(adminRouter)
+app.use(userRouter);
 app.use(userActivityRouter)
-app.use(taskRouter);
+app.use(adminRouter)
 app.use(AdminactivityRouter);
 app.use(teamRouter);
+app.use(projectRouter);
+app.use(taskRouter);
+app.use(meeetingRouter)
 
 const server = app.listen(port, () => {
-    console.log("TODO Running on : localhost", process.env.PORT);
+    console.log("CRM Running on : localhost", process.env.PORT);
 })
 
 
