@@ -1,13 +1,34 @@
 const mongoose = require('mongoose');
 
-var AdminSchema = mongoose.Schema({
+var AdminActivitySchema = mongoose.Schema({
+    user_id:{
+        type: String,
+        required: true
+    },
+    devicename:{
+        type: String,
+        required: true
+    },
     browser: {
         type: String,
-        required: true,
+        required: true
     },
+    os:{
+        type: String,
+        required: true
+    },
+    platform:{
+        type: String,
+        required: true
+    },
+    version:{
+        type: String,
+        required: true
+    }
+
     
 }, { timestamps: true });
 
-var Admin = mongoose.model('Admin', AdminSchema);
+var AdminActivity = mongoose.model('AdminActivity', AdminActivitySchema);
 
-module.exports = Admin;
+module.exports = AdminActivity;
