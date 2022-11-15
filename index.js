@@ -2,6 +2,7 @@ require('dotenv').config({ path: __dirname + '/config/.env' })
 const express = require('express')
 require('./config/db')
 const taskRouter = require('./routers/task')
+const userRouter = require('./routers/user')
 
 const app = express()
 app.use(express.json())
@@ -21,10 +22,12 @@ app.use(function (req, res, next) {
     next();
 })
 
-app.use(taskRouter);
+app.use("/task",taskRouter);
+app.use("/user",userRouter);
 const server = app.listen(port, () => {
     console.log("TODO Running on : localhost", process.env.PORT);
 })
+
 
 process.on('unhandledRejection', (err, Promise) => {
     console.log(`Error: ${err.message}`);
