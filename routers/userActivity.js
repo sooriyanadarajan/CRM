@@ -12,5 +12,4 @@ router.post('/list', asyncHandler(userActivityController.list))
 router.post('/listOne',asyncHandler(userActivityController.listOne))
 router.put('/update', asyncHandler(userActivityController.update))
 router.delete('/delete', asyncHandler(userActivityController.delete))
-
 module.exports = router
