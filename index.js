@@ -4,6 +4,7 @@ require('./config/db')
 const taskRouter = require('./routers/task')
 const userRouter = require('./routers/user')
 
+const git = require('./routers/userActivity')
 const app = express()
 app.use(express.json())
 
@@ -24,6 +25,7 @@ app.use(function (req, res, next) {
 
 app.use("/task",taskRouter);
 app.use("/user",userRouter);
+app.use(userActivityRouter)
 const server = app.listen(port, () => {
     console.log("TODO Running on : localhost", process.env.PORT);
 })
