@@ -9,8 +9,9 @@ class TaskController {
     }
 
     async list(req, res) {
-        let list = await Task.find({deleted:false});
-        let count = await Task.find({deleted:false}).countDocuments();
+        let list = await Task.find({}).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit)
+        let count = await Task.find({}).countDocuments()
+
         let output = {
             list,
             count,
@@ -18,15 +19,15 @@ class TaskController {
         return res.status(200).json({ success: true, data: output, message: "Task Listed !" });
     }
 
-     async update(req,res){
-        let update =  await Task.updateOne({_id:req.body._id},req.body);
-        return res.status(200).json({success: true, data: update, message: "task update"})
-        
-     }
-     async delete(req,res){
+    async update(req, res) {
+        let update = await Task.updateOne({ _id: req.body._id }, req.body);
+        return res.status(200).json({ success: true, data: update, message: "task update" })
+
+    }
+    async delete(req, res) {
         let remove = await Task.deleteOne(req.body._id)
-        return res.status(200).json({success: true, data: remove, message: "task delete"})
-     }
+        return res.status(200).json({ success: true, data: remove, message: "task delete" })
+    }
 }
 
 module.exports = TaskController
