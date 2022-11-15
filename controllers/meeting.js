@@ -36,6 +36,17 @@ class MeetingController {
         });
         return res.status(200).json({ success: true, data: doc, message: "Meeting Listed deleted!" });
     }
+    async changeStatus(req, res) {
+        const data =  await Meeting.findOne({ subject: req.body.subject})
+        data.status = !data.status
+        data.save();
+        // const filter = { organisedby: req.body.organisedby };
+        // const update = { status: !status.status};
+        // let doc = await Meeting.findOneAndUpdate(filter, update, {
+        //     returnOriginal: false
+        return res.status(200).json({ success: true, data: data, message: "Meeting Listed status update!" });
+    }
+
 }
 
 module.exports = MeetingController

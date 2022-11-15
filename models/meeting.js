@@ -29,6 +29,10 @@ var meetingSchema = mongoose.Schema({
     deleted: {
         type: Boolean,
         default: false,
+    },
+    status: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
 
