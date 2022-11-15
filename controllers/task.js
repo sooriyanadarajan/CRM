@@ -28,6 +28,13 @@ class TaskController {
         let remove = await Task.deleteOne(req.body._id)
         return res.status(200).json({ success: true, data: remove, message: "task delete" })
     }
+
+    async change(req, res) {
+        let a = await Task.findOne({ _id: req.body._id });
+        a.active = !a.active
+        a.save();
+        return res.status(200).json({ success: true, data: a, message: "change" })
+    }
 }
 
 module.exports = TaskController
