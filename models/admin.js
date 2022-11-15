@@ -21,6 +21,6 @@ var adminSchema = mongoose.Schema({
     },
 }, { timestamps: true });
 
-var Admin = mongoose.model('admin', adminSchema);
+module.exports = mongoose.model('admin', adminSchema);
 
-module.exports = Admin;
+// module.exports = Admin;

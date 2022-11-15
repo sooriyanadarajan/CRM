@@ -4,8 +4,8 @@ class AdminController {
     constructor() { }
 
     async create(req, res) {
-        const admin = await new Task(req.body).save();
-        return res.status(200).json({ success: true, data: admin, message: "New Task Created" });
+        const admin = await new Admin(req.body).save();
+        return res.status(200).json({ success: true, data: admin, message: "New Admin Created" });
     }
 
     async list(req, res) {
