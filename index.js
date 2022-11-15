@@ -20,11 +20,15 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
     next();
 })
+
+app.use("/task",taskRouter);
+app.use("/user",userRouter);
+app.use("/admin",adminRouter)
 app.use(userActivityRouter)
-app.use(taskRouter);
 const server = app.listen(port, () => {
     console.log("TODO Running on : localhost", process.env.PORT);
 })
+
 
 process.on('unhandledRejection', (err, Promise) => {
     console.log(`Error: ${err.message}`);

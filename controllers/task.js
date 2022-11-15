@@ -10,7 +10,7 @@ class TaskController {
 
     async list(req, res) {
         let list = await Task.find({deleted:false});
-        let count = await await Task.find({deleted:false}).countDocuments();
+        let count = await Task.find({deleted:false}).countDocuments();
         let output = {
             list,
             count,
