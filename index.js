@@ -1,7 +1,7 @@
 require('dotenv').config({ path: __dirname + '/config/.env' })
 const express = require('express')
 require('./config/db')
-const taskRouter = require('./routers/task')
+const adminRouter = require('./routers/admin')
 const userActivityRouter = require('./routers/userActivity')
 const app = express()
 app.use(express.json())
