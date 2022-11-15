@@ -8,6 +8,7 @@ const AdminactivityRouter=require('./routers/adminactivity')
 const userRouter=require('./routers/user')
 const adminRouter = require('./routers/admin')
 const teamRouter = require('./routers/team')
+const meetingRouter = require("./routers/meeting")
 const app = express()
 app.use(express.json())
 
@@ -27,7 +28,9 @@ app.use(function (req, res, next) {
 })
 
 app.use("/task",taskRouter);
+
 app.use("/user",userRouter);
+app.use("/meeting",meetingRouter)
 app.use(adminRouter)
 app.use(userActivityRouter)
 app.use(taskRouter);
