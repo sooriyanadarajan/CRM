@@ -9,7 +9,7 @@ class ProjectController {
     }
 
     async list(req, res) {
-        let list = await Project.find();
+        let list = await Project.find().skip((req.body.pageNumber - 1) * req.body.limit).limit(req.body.limit)
         let count = await Project.find({deleted:true}).countDocuments();
         let output = {
             list,
