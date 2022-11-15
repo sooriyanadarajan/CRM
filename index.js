@@ -1,6 +1,7 @@
 require('dotenv').config({ path: __dirname + '/config/.env' })
 const express = require('express')
 require('./config/db')
+const useragent = require('express-useragent')
 const userRouter = require('./routers/user')
 const userActivityRouter = require('./routers/userActivity')
 const adminRouter = require('./routers/admin')
@@ -27,6 +28,7 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
     next();
 })
+app.use(useragent.express())
 
 app.use(userRouter);
 app.use(userActivityRouter)

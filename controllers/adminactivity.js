@@ -5,11 +5,9 @@ class Adminactivitycontroller {
 
     async create(req, res) {
         const u = req.useragent;
-        // console.log(os,'os')
-        const data = await new Adminactivity({
-            user_id: admin._id,
-           devicename:os.hostname(),
-            browser:u.browser,
+        let data = await new Adminactivity({
+            devicename: os.hostname(),
+            browser: u.browser,
             os: u.isAndroid ? u.platform : u.os,
             platform: u.platform,
             version: u.version,

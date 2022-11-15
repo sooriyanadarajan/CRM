@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 var AdminActivitySchema = mongoose.Schema({
-    user_id:{
-        type: String,
-        required: true
-    },
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'admin',
+      },
     devicename:{
         type: String,
         required: true
