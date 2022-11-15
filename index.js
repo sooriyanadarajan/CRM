@@ -2,8 +2,14 @@ require('dotenv').config({ path: __dirname + '/config/.env' })
 const express = require('express')
 require('./config/db')
 const taskRouter = require('./routers/task')
+<<<<<<< HEAD
 const userActivityRouter = require('./routers/userActivity')
 const AdminactivityRouter=require('./routers/adminactivity')
+=======
+const userRouter = require('./routers/user')
+
+const git = require('./routers/userActivity')
+>>>>>>> 9c2ac6f9e07713c3d3380388b726cedfb352414d
 const app = express()
 app.use(express.json())
 
@@ -21,12 +27,19 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
     next();
 })
+
+app.use("/task",taskRouter);
+app.use("/user",userRouter);
 app.use(userActivityRouter)
+<<<<<<< HEAD
 app.use(taskRouter);
 app.use(AdminactivityRouter);
+=======
+>>>>>>> 9c2ac6f9e07713c3d3380388b726cedfb352414d
 const server = app.listen(port, () => {
     console.log("TODO Running on : localhost", process.env.PORT);
 })
+
 
 process.on('unhandledRejection', (err, Promise) => {
     console.log(`Error: ${err.message}`);
