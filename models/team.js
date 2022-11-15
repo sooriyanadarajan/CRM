@@ -5,9 +5,9 @@ var teamSchema = mongoose.Schema({
     name: {
         type: String,
     },
-    members: {
-        type: Array,
-    },
+    // members: {
+    //     type: Array,
+    // },
     teamLeader: {
         type: String,
     },

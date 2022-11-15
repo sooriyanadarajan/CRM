@@ -9,8 +9,14 @@ class UserActivityController {
     }
 
     async list(req, res) {
-        let list = await UserActivity.find({deleted:false,status:1});
-        return res.status(200).json({ success: true, data: list, message: "UserActivity Listed !" });
+        let list = await UserActivity.find({status:1}).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit);
+        let count = await UserActivity.find({}).countDocuments()
+
+        let output = {
+            list,
+            count,
+        }
+            return res.status(200).json({ success: true, data: output, message: "UserActivity Listed !" });
     }
 
     async listOne(req, res) {
