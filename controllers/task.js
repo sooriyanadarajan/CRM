@@ -9,8 +9,8 @@ class TaskController {
     }
 
     async list(req, res) {
-        let list = await Task.find({ deleted: false }).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit)
-        let count = await Task.find({ deleted: false }).countDocuments()
+        let list = await Task.find({}).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit)
+        let count = await Task.find({}).countDocuments()
 
         let output = {
             list,
