@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken')
 
 var adminSchema = mongoose.Schema({
     name: {
@@ -31,6 +32,17 @@ var adminSchema = mongoose.Schema({
         default: false,
     },
 }, { timestamps: true });
+
+
+// Sign JWT and return
+adminSchema.methods.generateAuthToken = async function () {
+  const admin = this
+  const token = await jwt.sign({ _id: admin._id.toString() }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE
+  })
+  //console.log(token)
+  return token
+}
 
 let Admin = mongoose.model('admin', adminSchema);
 
