@@ -13,11 +13,11 @@ class UserController {
                 res.status(400).send("please fill the above detail")
             }
 
-            // const findEmail = await User.findOne({ email })
-            // console.log(findEmail)
-            // if (findEmail) {
-            //     return res.status(400).send(`${email} is already used please another email`)
-            // }
+            const findEmail = await User.findOne({ email })
+            console.log(findEmail)
+            if (findEmail) {
+                return res.status(400).send(`${email} is already used please another email`)
+            }
             const salt = await bcrypt.genSalt(10)
             console.log(salt)
             const encryptedPassword = await bcrypt.hash(password, salt)
@@ -60,7 +60,7 @@ class UserController {
     }
 
     async delete(req, res) {
-        let remove = await User.deleteOne(req.body)
+        let remove = await User.deleteOne({_id:req.body.id})
         return res.status(200).json({ success: true, data: remove, message: "deleted successfully" })
 
     }

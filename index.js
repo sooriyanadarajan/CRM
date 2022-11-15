@@ -5,8 +5,8 @@ require('./config/db')
 const taskRouter = require('./routers/task')
 const userActivityRouter = require('./routers/userActivity')
 const AdminactivityRouter=require('./routers/adminactivity')
+const userRouter=require('./routers/user')
 const adminRouter = require('./routers/admin')
-const userActivityRouter = require('./routers/userActivity')
 const app = express()
 app.use(express.json())
 
@@ -31,6 +31,7 @@ app.use("/admin",adminRouter)
 app.use(userActivityRouter)
 app.use(taskRouter);
 app.use(AdminactivityRouter);
+
 const server = app.listen(port, () => {
     console.log("TODO Running on : localhost", process.env.PORT);
 })

@@ -1,10 +1,11 @@
-const Adminactivity = require('../models/Admminactivity')
-const u=req.useragent;
+const Adminactivity = require('../models/adminactivity')
 const os=require('os');
 class Adminactivitycontroller {
     constructor() { }
 
     async create(req, res) {
+// const u=req.useragent;
+// console.log(u,'u')
        
         const browser = await new Adminactivity(u.browser).save();
 

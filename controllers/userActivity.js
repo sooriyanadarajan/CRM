@@ -9,7 +9,7 @@ class UserActivityController {
     }
 
     async list(req, res) {
-        let list = await UserActivity.find();
+        let list = await UserActivity.find({deleted:false,status:1});
 
         return res.status(200).json({ success: true, data: list, message: "UserActivity Listed !" });
     }
@@ -30,8 +30,6 @@ class UserActivityController {
         console.log(req.body)
         let remove = await UserActivity.deleteOne({_id:req.body._id})
         return res.status(200).json({ success: true, data: remove, message: "new UserActivity updated" });
-
-
     }
 }
 
