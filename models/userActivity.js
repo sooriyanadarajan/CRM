@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-var userSchema = mongoose.Schema({
+var userActivitySchema = mongoose.Schema({
 
     name:{
         type:String
@@ -23,6 +23,6 @@ var userSchema = mongoose.Schema({
     },
 }, { timestamps: true });
 
-var UserActivity = mongoose.model('user', userSchema);
+var UserActivity = mongoose.model('userActivity', userActivitySchema);
 
 module.exports = UserActivity;

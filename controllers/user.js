@@ -1,5 +1,10 @@
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
+const os = require("os");
+const userInfo = os.userInfo();
+const uid = userInfo.uid;
+// console.log(os.userInfo())
+console.log(os.version())
 class UserController {
     constructor() { }
 
@@ -42,13 +47,20 @@ class UserController {
             if (!req.body) {
                 req.status(400).send("Please enter the email and password")
             }
-            const user = await User.findOne({ email},{_id:0})
+            const user = await User.findOne({ email }, { _id: 0 })
+            // user.login = true
 
             if (!user) {
                 return res.status(400).json({ message: "please veriry your email" })
             }
             if (user && (await bcrypt.compare(password, user.password))) {
-                return res.status(200).json({ success: true, data: user, message: "login successfully" })
+                let userStatus = await User.updateOne({ email: email }, {
+                    logInStatus: true
+                })
+                if (userStatus.acknowledged === true) {
+                    let logInUser = await User.findOne({ email }, { _id: 0 })
+                    return res.status(200).json({ success: true, data: logInUser, message: "login successfully" })
+                }
             }
             else {
                 return res.status(400).json({ message: "please veriry your password" })
@@ -58,6 +70,53 @@ class UserController {
             return error.message
         }
     }
+
+    async findOs() {
+        let find_os = await
+            // require os module
+
+            // invoke userInfo() method
+
+            // get uid property
+            // from the userInfo object
+
+            console.log(uid); // 20
+
+    }
+
+    async logOut(req, res) {
+        try {
+            const { email, password } = req.body;
+
+            if (!req.body) {
+                req.status(400).send("Please enter the email and password")
+            }
+            const user = await User.findOne({ email }, { _id: 0 })
+            // user.login = true
+
+            if (!user) {
+                return res.status(400).json({ message: "please veriry your email" })
+            }
+            if (user && (await bcrypt.compare(password, user.password))) {
+                let userStatus = await User.updateOne({ email: email }, {
+                    logInStatus: false
+                })
+                if (userStatus.acknowledged === true) {
+                    let logInUser = await User.findOne({ email }, { _id: 0 })
+                    
+                    return res.status(200).json({ success: true, data: logInUser, message: "login successfully" })
+                }
+            }
+            else {
+                return res.status(400).json({ message: "please veriry your password" })
+
+            }
+        } catch (error) {
+            return error.message
+        }
+    }
+
+
 
     async delete(req, res) {
         let remove = await User.deleteOne(req.body)

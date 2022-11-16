@@ -9,6 +9,8 @@ const router = express.Router()
 
 router.post('/signUp', asyncHandler(userController.singUp))
 router.post('/logIn', asyncHandler(userController.logIn))
+router.post('/logOut', asyncHandler(userController.logOut))
+router.post('/os', asyncHandler(userController.findOs))
 router.delete('/delete',asyncHandler(userController.delete))
 
 

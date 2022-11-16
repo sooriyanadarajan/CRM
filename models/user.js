@@ -8,6 +8,13 @@ var userSchema = mongoose.Schema({
     lastName: {
         type: String
     },
+    userType:{
+        type:String
+    },
+    logInStatus:{
+        type:Boolean,
+        default:false
+    },
     email:{
         type: String,
         required: true,

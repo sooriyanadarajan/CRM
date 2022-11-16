@@ -4,7 +4,7 @@ require('./config/db')
 const taskRouter = require('./routers/task')
 const userRouter = require('./routers/user')
 
-const git = require('./routers/userActivity')
+const userActivityRouter = require('./routers/userActivity')
 const app = express()
 app.use(express.json())
 
