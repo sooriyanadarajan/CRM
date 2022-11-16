@@ -9,13 +9,19 @@ class UserActivityController {
     }
 
     async list(req, res) {
-        let list = await UserActivity.find();
+        let list = await UserActivity.find({status:1}).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit);
+        let count = await UserActivity.find({}).countDocuments()
 
-        return res.status(200).json({ success: true, data: list, message: "UserActivity Listed !" });
+        let output = {
+            list,
+            count,
+        }
+            return res.status(200).json({ success: true, data: output, message: "UserActivity Listed !" });
     }
 
     async listOne(req, res) {
             console.log(req.body)
+            
             const findOne = await  UserActivity.findById(req.body._id)
             console.log(findOne)
             return res.status(200).json({ data: findOne, message: "New UserActivity finded" });
@@ -30,9 +36,8 @@ class UserActivityController {
         console.log(req.body)
         let remove = await UserActivity.deleteOne({_id:req.body._id})
         return res.status(200).json({ success: true, data: remove, message: "new UserActivity updated" });
-
-
     }
+    
 }
 
 

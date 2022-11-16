@@ -7,9 +7,9 @@ const taskController = new TaskController();
 
 const router = express.Router()
 
-router.post('/create',  asyncHandler(taskController.create))
-router.post('/list', asyncHandler(taskController.list))
-router.post('/expirylist',  asyncHandler(taskController.expirylist))
-router.patch('/update', asyncHandler(taskController.update))
+router.post('/task/create', asyncHandler(taskController.create))
+router.post('/task/list', asyncHandler(taskController.list))
+router.patch('/task/update', asyncHandler(taskController.update))
+router.post('/task/change', asyncHandler(taskController.change))
 
 module.exports = router
