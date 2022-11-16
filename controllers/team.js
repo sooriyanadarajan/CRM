@@ -9,7 +9,13 @@ class Team {
     }
 
     async list(req, res) {
-        let list = await team.find({deleted:false});
+        let list = await team.find({}).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit)
+        let count = await team.find({}).countDocuments()
+
+        let output = {
+            list,
+            count,
+        }
         return res.status(200).json({ success: true, data: list, message: "Team Listed !" });
     }
 
