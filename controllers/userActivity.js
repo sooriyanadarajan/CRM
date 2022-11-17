@@ -1,3 +1,4 @@
+const user = require('../models/user');
 const UserActivity = require('../models/UserActivity')
 
 class UserActivityController {
@@ -9,10 +10,12 @@ class UserActivityController {
     }
 
     async list(req, res) {
+        let table=await user.find({})
         let list = await UserActivity.find({status:1}).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit);
         let count = await UserActivity.find({}).countDocuments()
 
         let output = {
+            table,
             list,
             count,
         }
