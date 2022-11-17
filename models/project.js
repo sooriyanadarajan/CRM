@@ -5,6 +5,10 @@ var projectSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    description : {
+        type: String,
+        required: true,
+    },
     expiry: {
         type: Boolean,
         default: false
