@@ -1,4 +1,5 @@
 const User = require('../models/user')
+// const UserActivity = require('../models/userActivity')
 const bcrypt = require('bcryptjs')
 const os = require("os");
 const userInfo = os.userInfo();
@@ -42,33 +43,37 @@ class UserController {
 
     async logIn(req, res) {
         try {
+            console.log(req.body)
             const { email, password } = req.body;
 
-            if (!req.body) {
-                req.status(400).send("Please enter the email and password")
-            }
+            // if (!req.body) {
+            //     req.status(400).send("Please enter the email and password")
+            // }
             const user = await User.findOne({ email }, { _id: 0 })
-            // user.login = true
-
+            console.log(user)
             if (!user) {
-                return res.status(400).json({ message: "please veriry your email" })
+                return res.status(400).json({ message: "User Not Found" })
             }
             if (user && (await bcrypt.compare(password, user.password))) {
                 let userStatus = await User.updateOne({ email: email }, {
                     logInStatus: true
                 })
+                console.log(userStatus)
+                await new UserActivity(req.body).save();
                 if (userStatus.acknowledged === true) {
                     let logInUser = await User.findOne({ email }, { _id: 0 })
+                    console.log(logInUser)
                     return res.status(200).json({ success: true, data: logInUser, message: "login successfully" })
                 }
-            }
-            else {
-                return res.status(400).json({ message: "please veriry your password" })
+                else {
+                    return res.status(400).json({ message: "please veriry your password" })
 
+                }
             }
         } catch (error) {
             return error.message
         }
+
     }
 
     async findOs() {
@@ -103,7 +108,7 @@ class UserController {
                 })
                 if (userStatus.acknowledged === true) {
                     let logInUser = await User.findOne({ email }, { _id: 0 })
-                    
+
                     return res.status(200).json({ success: true, data: logInUser, message: "login successfully" })
                 }
             }
@@ -119,7 +124,7 @@ class UserController {
 
 
     async delete(req, res) {
-        let remove = await User.deleteOne({_id:req.body.id})
+        let remove = await User.deleteOne({ _id: req.body.id })
         return res.status(200).json({ success: true, data: remove, message: "deleted successfully" })
 
     }

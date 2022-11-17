@@ -38,6 +38,8 @@ class UserActivityController {
         return res.status(200).json({ success: true, data: remove, message: "new UserActivity updated" });
     }
     
+
+    
 }
 
 
