@@ -8,12 +8,12 @@ var adminSchema = mongoose.Schema({
     },
     role: {
         type: String,
-        required: true,
+        required: false,
     },
     email: {
         type: String,
-        required: true,
-        unique: true,
+        required: true
+    
     },
     password:{
         type:String,
@@ -30,19 +30,21 @@ var adminSchema = mongoose.Schema({
     deleted: {
         type: Boolean,
         default: false,
-    },
+    }
+    
+    
 }, { timestamps: true });
 
 
 // Sign JWT and return
-adminSchema.methods.generateAuthToken = async function () {
-  const admin = this
-  const token = await jwt.sign({ _id: admin._id.toString() }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE
-  })
-  //console.log(token)
-  return token
-}
+// adminSchema.methods.generateAuthToken = async function () {
+//   const admin = this
+//   const token = await jwt.sign({ _id: admin._id.toString() }, process.env.JWT_SECRET, {
+//     expiresIn: process.env.JWT_EXPIRE
+//   })
+//   //console.log(token)
+//   return token
+// }
 
 let Admin = mongoose.model('admin', adminSchema);
 
