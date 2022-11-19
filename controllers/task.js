@@ -28,9 +28,13 @@ class TaskController {
     }
 
     async filter(req, res) {
-        let find = await Task.find({ name: req.body.name })
-            .populate(['project_id', 'admin_id', 'user_id']).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit)
-            .exec()
+        let find = await Task.find({
+            $or: [{
+                name: { $regex: req.body.key, $options: 'i' },
+                taskname: { $regex: req.body.key, $options: 'i' }
+            }]
+        }).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit)
+
         return res.status(200).json({ success: true, data: find, message: 'populate' })
 
     }

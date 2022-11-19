@@ -35,6 +35,9 @@ var taskSchema = mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    taskaname: {
+        type: String
+    }
 }, { timestamps: true });
 
 var Task = mongoose.model('task', taskSchema);
