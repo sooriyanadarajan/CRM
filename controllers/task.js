@@ -19,6 +19,29 @@ class TaskController {
         return res.status(200).json({ success: true, data: output, message: "Task Listed !" });
     }
 
+    async find(req, res) {
+        let find = await Task.find()
+            .populate(['project_id', 'admin_id', 'user_id']).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit)
+            .exec()
+        return res.status(200).json({ success: true, data: find, message: 'populate' })
+
+    }
+
+    async filter(req, res) {
+        let find = await Task.find({ name: req.body.name })
+            .populate(['project_id', 'admin_id', 'user_id']).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit)
+            .exec()
+        return res.status(200).json({ success: true, data: find, message: 'populate' })
+
+    }
+
+    async findById(req, res) {
+        let findById = await Task.findById({ _id: req.body._id })
+            .populate(['project_id', 'admin_id', 'user_id'])
+        return res.status(200).json({ success: true, data: findById, message: "findById" })
+    }
+
+
     async update(req, res) {
         let update = await Task.updateOne({ _id: req.body._id }, req.body);
         return res.status(200).json({ success: true, data: update, message: "task update" })
