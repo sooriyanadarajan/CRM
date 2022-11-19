@@ -3,22 +3,24 @@ const mongoose = require('mongoose');
 var userActivitySchema = mongoose.Schema({
 
     name:{
-        type:String
+        type:String,
+        required: true
     },
     logintime: {
         type: String,
-
+        required: true
     },
     os: {
         type: String,
-        
+        required: true
     },
     sessiontiming: {
         type: String,
-
+        required: true
     },
     deleted: {
-        type: String,
+        type: Boolean,
+        default: false,
         
     },
 }, { timestamps: true });

@@ -30,6 +30,6 @@ var userSchema = mongoose.Schema({
     }
 })
 
-var user = mongoose.model('userActivity', userSchema);
+var user = mongoose.model('user', userSchema);
 
 module.exports = user;

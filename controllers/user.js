@@ -40,25 +40,16 @@ class UserController {
         try {
             console.log(req.body)
             const { email, password } = req.body;
-<<<<<<< Updated upstream
-
-            // if (!req.body) {
-            //     req.status(400).send("Please enter the email and password")
-            // }
-            const user = await User.findOne({ email }, { _id: 0 })
-=======
             
             if (!req.body) {
                  req.status(400).send("Please enter the email and password")
              }
             const user = await User.findOne({ email},{_id:0})
->>>>>>> Stashed changes
             console.log(user)
             if (!user) {
                 return res.status(400).json({ message: "User Not Found" })
             }
             if (user && (await bcrypt.compare(password, user.password))) {
-<<<<<<< Updated upstream
                 let userStatus = await User.updateOne({ email: email }, {
                     logInStatus: true
                 })
@@ -73,12 +64,6 @@ class UserController {
                     return res.status(400).json({ message: "please veriry your password" })
 
                 }
-=======
-                return res.status(200).json({ success: true, data: user, message: "login successfully" })
-            }
-            else {
-                return res.status(400).json({ message: "please veriry your password" })
->>>>>>> Stashed changes
             }
             }
          catch (error) {
@@ -87,7 +72,6 @@ class UserController {
 
     }
 
-<<<<<<< Updated upstream
     async findOs() {
         let find_os = await
             // require os module
@@ -135,8 +119,6 @@ class UserController {
 
 
 
-=======
->>>>>>> Stashed changes
     async delete(req, res) {
         let remove = await User.deleteOne({ _id: req.body.id })
         return res.status(200).json({ success: true, data: remove, message: "deleted successfully" })
