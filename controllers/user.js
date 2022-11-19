@@ -40,11 +40,19 @@ class UserController {
         try {
             console.log(req.body)
             const { email, password } = req.body;
+<<<<<<< HEAD
             
             if (!req.body) {
                  req.status(400).send("Please enter the email and password")
              }
             const user = await User.findOne({ email},{_id:0})
+=======
+
+            // if (!req.body) {
+            //     req.status(400).send("Please enter the email and password")
+            // }
+            const user = await User.findOne({ email }, { _id: 0 })
+>>>>>>> 4d0c4b552f79a41c2f50ecb9cb71050f22affcf5
             console.log(user)
             if (!user) {
                 return res.status(400).json({ message: "User Not Found" })

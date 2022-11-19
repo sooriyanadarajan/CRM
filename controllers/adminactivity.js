@@ -1,5 +1,7 @@
 const Adminactivity = require('../models/adminactivity')
 const os = require('os');
+const Admin = require('../models/admin');
+
 class Adminactivitycontroller {
     constructor() { }
 
@@ -10,7 +12,7 @@ class Adminactivitycontroller {
             browser: u.browser,
             os: u.isAndroid ? u.platform : u.os,
             platform: u.platform,
-            version: u.version,
+            version: u.version, 
         }).save();
 
         return res.status(200).json({ success: true, data: data, message: "useragent" });

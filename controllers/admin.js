@@ -1,22 +1,38 @@
-const Admin = require('../models/admin')
+const Admin = require('../models/admin');
+const os = require('os');
+const AdminActivity = require('../models/adminactivity');
 
 class AdminController {
     constructor() { }
 
     async create(req, res) {
         const admin = await new Admin(req.body).save();
+          
         return res.status(200).json({ success: true, data: admin, message: "New Admin Created" });
     }
 
     async login (req, res){ 
+      console.log(req.body,'body data')
         const admin = await Admin.findOne({email:req.body.email, password:req.body.password});
-        if (admin) {
+        console.log(admin,'admin')
+        const u = req.useragent;
+        let data = await new AdminActivity({
+          devicename: os.hostname(),
+          browser: u.browser,
+          os: u.isAndroid ? u.platform : u.os,
+          platform: u.platform,
+          version: u.version
+      }).save();
+      console.log(data,'data')
+
+        // if (admin) {
             
-          const token = await admin.generateAuthToken();
-          return res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 24 * 15, httpOnly: false }).json({ success: true, data: admin, message: 'Login Successful' })
-        } else {
-          return res.status(401).send({ success: false, message: 'Invalid Credentials' })
-        }
+        //   const token = await admin.generateAuthToken();
+        //   return res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 24 * 15, httpOnly: false }).json({ success: true, data: admin, message: 'Login Successful' })
+        // } else {
+        //   return res.status(401).send({ success: false, message: 'Invalid Credentials' })
+        // }
+        return res.status(200).send({ success: true, data:data, message: 'Login Success' })
       }
       
       async logout(req, res) {
