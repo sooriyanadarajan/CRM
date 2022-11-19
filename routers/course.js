@@ -1,14 +1,14 @@
 const express = require('express')
 const asyncHandler = require('../middlewares/async')
 
-const BugController = require('../controllers/task')
+const CourseController = require('../controllers/task')
 
-const BugController = new BugController();
+const courseController = new CourseController();
 
 const router = express.Router()
 
 
-router.post('/bug/create', asyncHandler(bugController.create))
-router.post('/bug/list', asyncHandler(bugController.list))
-router.patch('/bug/update', asyncHandler(bugController.update))
-router.post('/bug/delete', asyncHandler(taskController.delete))
+router.post('/course/create', asyncHandler(courseController.create))
+router.post('/course/list', asyncHandler(courseController.list))
+router.patch('/course/update', asyncHandler(courseController.update))
+router.post('/bug/delete', asyncHandler(courseController.delete))

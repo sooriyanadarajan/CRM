@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-var bugSchema = mongoose.Schema({
+var courseSchema = mongoose.Schema({
 
     name: {
         type: String,
@@ -24,6 +24,6 @@ var bugSchema = mongoose.Schema({
     }
 })
 
-var Bug = mongoose.model('bug', bugSchema);
+var Course = mongoose.model('course', courseSchema);
 
-module.exports = Bug;
+module.exports = Course;
