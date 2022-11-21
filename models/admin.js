@@ -8,7 +8,8 @@ var adminSchema = mongoose.Schema({
     },
     role: {
         type: String,
-        required: false,
+        required: false
+        //SUPERADMIN , SUBADMIN, ADMIN
     },
     email: {
         type: String,
@@ -25,7 +26,7 @@ var adminSchema = mongoose.Schema({
         type: String,
         default: 0,
         enum: [0, 1, 2, 3]
-        // 0 - created, 1 - pending, 2 - completed , 3 - hold
+        // 0 - created, 1 - ACTIVE, 2 - INACTIVE 
     },
     deleted: {
         type: Boolean,
