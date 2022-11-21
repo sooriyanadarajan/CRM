@@ -36,6 +36,6 @@ var meetingSchema = mongoose.Schema({
     }
 }, { timestamps: true });
 
-var Meeting = mongoose.model('meetingSchema', meetingSchema);
+var Meeting = mongoose.model('meeting', meetingSchema);
 
 module.exports = Meeting;

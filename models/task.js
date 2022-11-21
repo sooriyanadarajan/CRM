@@ -1,17 +1,21 @@
 const mongoose = require('mongoose');
 
 var taskSchema = mongoose.Schema({
-    admin_id: {
+    from_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'admin',
+        ref: 'user',
     },
-    user_id: {
+    to_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
-    project: {
+    project_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'project'
+    },
+    team_id:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'team'
     },
     name: {
         type: String,
@@ -34,9 +38,6 @@ var taskSchema = mongoose.Schema({
     deleted: {
         type: Boolean,
         default: false,
-    },
-    taskaname: {
-        type: String
     }
 }, { timestamps: true });
 

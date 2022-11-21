@@ -10,10 +10,12 @@ var teamSchema = mongoose.Schema({
         ref:'user'
     }],
     teamLeader: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'user'
     },
     reportingPerson: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'user'
     },
     status: {
         type: Boolean
