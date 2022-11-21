@@ -11,6 +11,11 @@ var userSchema = mongoose.Schema({
     userType:{
         type:String
     },
+    roleType: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'role',
+      //developer, tester, hr, tl, pl, 
+    },
     logInStatus:{
         type:Boolean,
         default:false

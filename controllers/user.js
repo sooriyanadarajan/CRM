@@ -7,7 +7,7 @@ class UserController {
 
     async singUp(req, res) {
         try {
-            const { firstName, lastName, email, password } = req.body
+            const { firstName, lastName, email, password, roleType } = req.body
             console.log(req.body)
             console.log(password)
             if (!req.body) {
@@ -27,7 +27,8 @@ class UserController {
                 firstName,
                 lastName,
                 email,
-                password: encryptedPassword
+                password: encryptedPassword,
+                roleType
             })
             // console.log(user)
             res.status(200).json({ success: true, data: user, message: "singup successfully" })

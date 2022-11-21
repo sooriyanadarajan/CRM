@@ -12,6 +12,7 @@ const taskRouter = require('./routers/task')
 const meeetingRouter = require('./routers/meeting')
 const leaveRouter = require('./routers/leave')
 const bugRouter = require('./routers/bug')
+const roleRouter = require('./routers/role')
 
 const app = express()
 app.use(express.json())
@@ -33,8 +34,8 @@ app.use(function (req, res, next) {
 app.use(useragent.express())
 
 app.use(userRouter);
-app.use(userActivityRouter)
-app.use(adminRouter)
+app.use(userActivityRouter);
+app.use(adminRouter);
 app.use(AdminactivityRouter);
 app.use(teamRouter);
 app.use(projectRouter);
@@ -42,6 +43,7 @@ app.use(taskRouter);
 app.use(meeetingRouter);
 app.use(leaveRouter);
 app.use(bugRouter);
+app.use(roleRouter);
 
 
 

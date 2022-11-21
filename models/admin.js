@@ -9,7 +9,7 @@ var adminSchema = mongoose.Schema({
     role: {
         type: String,
         required: false
-        //SUPERADMIN , SUBADMIN, ADMIN
+        //SUPERADMIN , SUBADMIN, ADMIN,HR,TL,PL,MANAGER
     },
     email: {
         type: String,
