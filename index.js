@@ -11,6 +11,7 @@ const projectRouter=require('./routers/project')
 const taskRouter = require('./routers/task')
 const meeetingRouter = require('./routers/meeting')
 const leaveRouter = require('./routers/leave')
+const bugRouter = require('./routers/bug')
 
 const app = express()
 app.use(express.json())
@@ -39,7 +40,10 @@ app.use(teamRouter);
 app.use(projectRouter);
 app.use(taskRouter);
 app.use(meeetingRouter);
-app.use(leaveRouter)
+app.use(leaveRouter);
+app.use(bugRouter);
+
+
 
 const server = app.listen(port, () => {
     console.log("CRM Running on : localhost", process.env.PORT);

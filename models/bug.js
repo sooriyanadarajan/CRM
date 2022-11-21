@@ -5,25 +5,50 @@ var bugSchema = mongoose.Schema({
     name: {
         type: String,
         required: true
+    }, 
+    from_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
     },
-    from: {
-        type: Date
+    to_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
     },
-    to: {
-        type: Date
+    bug_no:{
+        type:Number
     },
-    date: {
-        type: date
+    File:{
+        type:String
+    },
+    screenshot:{
+        type:String
+    },
+    description:{
+        type:String
+    },
+    active:{
+        type:String
+    },
+    project_id:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'project',
+    },
+    date:{
+        type:Date
+    },
+    duration:{
+        type:String
     },
     status: {
-        type: Boolean,
-        default: true
+        type: Number,
+        default: 0
     },
     deleted: {
-        type: String,
+        type: Boolean,
+        default:false
     }
 })
 
-var Bug = mongoose.model('bug', bugSchema);
+var bug = mongoose.model('bug', bugSchema);
 
-module.exports = Bug;
+module.exports = bug;
