@@ -2,29 +2,30 @@ const mongoose = require('mongoose');
 
 var meetingSchema = mongoose.Schema({
     organisedby: {
-        type: String,
-        required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
     },
-    from: {
+    
+    from_time: {
         type: Date,
         required: false
     },
-    to: {
+    to_time: {
         type: Date,
         required: false,
         // 0 - created, 1 - pending, 2 - completed , 3 - hold
     },
     duration: {
         type: String,
-        required: false,
+        
     },
-    // members: {
-    //     type: Array,
-    //     required: false
-    // },
+    members: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'}
+    ],
     subject: {
         type:String,
-        required:false
+        
     },
     deleted: {
         type: Boolean,

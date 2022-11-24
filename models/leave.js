@@ -1,14 +1,20 @@
 const mongoose = require('mongoose');
 
 var leaveSchema = mongoose.Schema({
-
+    from_id:{
+       type: mongoose.Schema.Types.ObjectId,
+       ref:'user'
+    },
+    to_id:{
+       type: mongoose.Schema.Types.ObjectId,
+       ref:'user'
+    },
     reason: {
         type: String,
-        required: true
     },
     type: {
         type: String,
-        required: true
+        required: false
     },
     from: {
         type: Date
@@ -17,7 +23,11 @@ var leaveSchema = mongoose.Schema({
         type: Date
     },
     cc: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'user'
+    },
+    date:{
+        type: Date,
     },
     leaveStatus: {
         type: Boolean,
