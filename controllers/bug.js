@@ -47,6 +47,7 @@ class BugController {
 
     //  24.11.2022  update status of bug
     async update(req, res) {
+        console.log('this update working')
         let update = await bug.updateOne({ user_id: req.body.user_id, bug_no: req.body.bug_no }, { status: req.body.status })
         return res.status(200).json({ success: true, data: update, message: "new UserActivity updated" });
     }
@@ -85,8 +86,23 @@ async create(req, res) {
         bug_no : Math.floor((Math.random() * 100) + 1),
         name: req.body.name
         }).save();
+        console.log(newbug,'newbug console')
     return res.status(200).json({ success: true, data: newbug, message: "New UserActivity Created" });
 }
+
+// 29.11.2022 
+// 1) populate the to_id from the list response
+
+async findById(req, res) {
+    let findById = await bug.findById({ _id: req.body._id} )
+        .populate(['to_id'])
+    return res.status(200).json({ success: true, data: findById, message: "populated" })
+}
+
+
+// 2) Changes in random number
+
+
 
 }
 

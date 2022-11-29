@@ -10,6 +10,7 @@ router.post('/bug/listOne', asyncHandler(bug.listOne))
 router.put('/bug/update', asyncHandler(bug.update))
 router.delete('/bug/delete', asyncHandler(bug.delete))
 // router.post('/bug/insert',asyncHandler(bug.insert))
-router.post('/bug/bugno',asyncHandler(bug.getNextSequenceValue))
+// router.post('/bug/bugno',asyncHandler(bug.getNextSequenceValue))
+router.post('/bug/findbyid',asyncHandler(bug.findById))
 
 module.exports = router

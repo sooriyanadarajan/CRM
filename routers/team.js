@@ -8,5 +8,6 @@ router.post('/team/create',  asyncHandler(teamController.create))
 router.post('/team/list', asyncHandler(teamController.list))
 router.put('/team/update', asyncHandler(teamController.update))
 router.delete('/team/delete', asyncHandler(teamController.delete))
+router.patch('/team/updateOne',asyncHandler(teamController.updatemembers))
 
 module.exports = router
