@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { devNull } = require('os');
 
 var bugSchema = mongoose.Schema({
 
@@ -13,9 +14,11 @@ var bugSchema = mongoose.Schema({
     to_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
+        type: Array,
     },
     bug_no:{
-        type:Number
+        type:Number,
+        default:1
     },
     File:{
         type:String
@@ -43,6 +46,7 @@ var bugSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    //0 - created, 1 - open, 2 - onhold, 3 - not a bug , 4 -completed
     deleted: {
         type: Boolean,
         default:false

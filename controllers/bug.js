@@ -1,43 +1,93 @@
 const bug = require('../models/bug')
 class BugController {
-    constructor() { }
-
-    async create(req, res) {
-        const newbug = await new bug(req.body).save();
-        return res.status(200).json({ success: true, data: newbug, message: "New UserActivity Created" });
-    }
+    constructor() {}
+    // async create(req, res) {
+    //     const newbug = await new bug(req.body).save();
+    //     return res.status(200).json({ success: true, data: newbug, message: "New UserActivity Created" });
+    // }
 
     async list(req, res) {
-        let table=await user.find({})
-        let list = await bug.find({}).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit);
-        let count = await UserActivity.find({}).countDocuments()
+        let list = await bug.find({ to_id: req.body.to_id })
+        let count = await bug.find({ to_id: req.body.to_id }).countDocuments()
 
         let output = {
-            table,
             list,
             count,
         }
-            return res.status(200).json({ success: true, data: output, message: "UserActivity Listed !" });
+        return res.status(200).json({ success: true, data: output, message: "UserActivity Listed !" });
     }
 
     async listOne(req, res) {
-            const findOne = await  UserActivity.findById(req.body._id)
-            return res.status(200).json({ data: findOne, message: "New UserActivity finded" });
+        const findOne = await UserActivity.findById()
+        return res.status(200).json({ data: findOne, message: "New UserActivity finded" });
     }
 
     async update(req, res) {
-        let update = await  bug.updateOne({ _id: req.body._id }, req.body)
+        let update = await bug.updateOne()
         return res.status(200).json({ success: true, data: update, message: "new UserActivity updated" });
     }
 
     async delete(req, res) {
-        
-        let remove = await bug.deleteOne({_id:req.body._id})
+
+        let remove = await bug.deleteOne({ _id: req.body._id })
         return res.status(200).json({ success: true, data: remove, message: "new UserActivity updated" });
     }
-    
 
-    
+    // 24.11.2022 // to based list fetch
+    async list(req, res) {
+        let list = await bug.find({ to_id: req.body.to_id })
+        let count = await bug.find({ to_id: req.body.to_id }).countDocuments()
+
+        let output = {
+            list,
+            count,
+        }
+        return res.status(200).json({ success: true, data: output, message: "UserActivity Listed !" });
+    }
+
+    //  24.11.2022  update status of bug
+    async update(req, res) {
+        let update = await bug.updateOne({ user_id: req.body.user_id, bug_no: req.body.bug_no }, { status: req.body.status })
+        return res.status(200).json({ success: true, data: update, message: "new UserActivity updated" });
+    }
+
+    //28.11.22
+
+
+    //  1) update without userid
+
+    async update(req, res) {
+        let update = await bug.updateOne({ bug_no: req.body.bug_no }, { status: req.body.status })
+        return res.status(200).json({ success: true, data: update, message: 'status changed' })
+
+    }
+    // 2) assign the bug to multiple user by using update method
+
+    async update(req, res) {
+        let update = await bug.updateOne({ bug_no: req.body.bug_no }, { to_id: req.body.to_id })
+        return res.status(200).json({ success: true, data: update, message: 'status changed' })
+    }
+
+// 3) create a random bug number. 
+
+// async insert(req, res) {
+//     let insert = await  bug.insert({   
+//         "bug" : getNextSequence('bug_no'), 
+
+//     })
+//     return res.status(200).json({ success: true, data: insert, message: "new UserActivity updated" });
+// }
+
+
+async create(req, res) {
+    const newbug = await new bug({
+        to_id: req.body.to_id,
+        bug_no : Math.floor((Math.random() * 100) + 1),
+        name: req.body.name
+        }).save();
+    return res.status(200).json({ success: true, data: newbug, message: "New UserActivity Created" });
+}
+
 }
 
 

@@ -85,6 +85,26 @@ class UserController {
             console.log(uid); // 20
 
     }
+    // async findUserDetail(req,res){
+    //     let table = await User.aggregate(
+    //         [
+    //             {
+    //                 $match:{ _id: ObjectId(req.body._id)}
+    //             },
+    //             {
+    //                 $lookup:{
+    //                     from:"bugs",
+    //                     localField:"_id",
+    //                     foreignField:"to_id",
+    //                     as:"buglist for user"
+    //                 }
+    //             },
+                
+    //         ]
+    //     )
+    //     // let table= await User.findById(req.body._id)
+    //     return res.status(200).json({ success: true, data: table, message: "buglisted for user" })
+    //  }
 
     async logOut(req, res) {
         try {
