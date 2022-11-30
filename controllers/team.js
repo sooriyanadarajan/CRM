@@ -26,7 +26,7 @@ class Team {
     }
 
     async delete(req, res) {
-        let remove = await team.deleteOne({_id:req.body._id})
+        let remove = await team.deleteOne({team_id:req.body.team_id},)
         return res.status(200).json({ success: true, data: remove, message: "new UserActivity updated" });
     } 
 

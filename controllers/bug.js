@@ -21,7 +21,7 @@ class BugController {
     }
 
     async listOne(req, res) {
-        const findOne = await UserActivity.findById()
+        const findOne = await bug.findById()
         return res.status(200).json({ data: findOne, message: "New UserActivity finded" });
     }
 
@@ -97,7 +97,7 @@ class BugController {
 // 1) populate the to_id from the list response
 
 async findById(req, res) {
-    let findById = await bug.findById({ _id: req.body._id} )
+    let findById = await bug.findById({_id: req.body._id} )
         .populate(['to_id'])
     return res.status(200).json({ success: true, data: findById, message: "populated" })
 }
@@ -124,17 +124,30 @@ async insert(req,res){
 
 }
 */
-// 30/11/2022 
+// 30/11/2022  (sort)
 async listed(req, res) {
-    let list = await bug.find({}).sort({bug_no:-1})
-    let count = await bug.find().countDocuments()
-    let output = {
-        list,
-        count,
-    }
-    return res.status(200).json({ success: true, data: output, message: "bug number listed" });
+    let list = await bug.findOne({}).sort({bug_no:-1})
+    console.log(list)
+    return res.status(200).json({ success: true, data: list , message: "bug number listed" });
 }
 
+async createPin(req, res) {
+    const admin = await bug.findOne().sort({bug_no:-1});
+    // console.log(admin)
+     let x= admin.bug_no
+     x+1
+    console.log(x+1)
+    const newbug = await new bug({
+        bug_no:x +1,
+        to_id:req.body.to_id,
+        name:req.body.name,
+        from_id:req.body. from_id,
+        project_id:req.body. project_id,
+        date:req.body.date        
+    }).save();
+    
+    return res.status(200).json({ success: true, data: newbug, message: "New UserActivity Created" });
+}
 }
 
 

@@ -35,6 +35,21 @@ class ProjectController {
 
         return res.status(200).json({ success: true, data: doc, message: "Task deleted!" });
     }
+
+    // 30/11/2022 team_id api
+    async findById(req, res) {
+        let findById = await Project.findById({_id: req.body._id} )
+            .populate(['team_id'])
+            .populate(['projectlead'])
+        return res.status(200).json({ success: true, data: findById, message: "populated" })
+    }
+// // 30/11/2022 projectLead api
+
+//     async findById1(req, res) {
+//         let findById = await Project.findById({_id: req.body._id} )
+//             .populate(['projectlead'])
+//         return res.status(200).json({ success: true, data: findById, message: "populated" })
+//     }
 }
 
 module.exports = ProjectController

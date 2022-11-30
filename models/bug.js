@@ -3,7 +3,6 @@
 // const nanoid = require('nanoid')
 var { nanoid } = require("nanoid");
 // var ID = nanoid();
-
 const mongoose = require('mongoose');
 const { devNull } = require('os');
 // const nanoid  = require('nanoid');
@@ -17,11 +16,13 @@ var bugSchema = mongoose.Schema({
     from_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
+        required:true
     },
     to_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
         type: Array,
+        required:true
     },
     bug_no:{
         type: Number,
@@ -44,9 +45,11 @@ var bugSchema = mongoose.Schema({
     project_id:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'project',
+        required:true
     },
     date:{
-        type:Date
+        type:Date,
+        required:true
     },
     duration:{
         type:String

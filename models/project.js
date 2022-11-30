@@ -5,6 +5,14 @@ var projectSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    projectlead:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+    },
+    team_id:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'team'
+    },
     description : {
         type: String,
         required: true,

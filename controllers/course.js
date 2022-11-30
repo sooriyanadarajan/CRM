@@ -40,6 +40,7 @@ class CourseController {
 
     async change(req, res) {
         let a = await Course.findOne({ _id: req.body._id });
+        console.log(a)
         a.active = !a.active
         a.save();
         return res.status(200).json({ success: true, data: a, message: "change" })
