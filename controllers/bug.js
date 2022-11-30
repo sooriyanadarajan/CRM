@@ -1,10 +1,13 @@
 const bug = require('../models/bug')
+// const{ nanoid } = require("nanoid");
+
 class BugController {
     constructor() {}
-    // async create(req, res) {
-    //     const newbug = await new bug(req.body).save();
-    //     return res.status(200).json({ success: true, data: newbug, message: "New UserActivity Created" });
-    // }
+    async create(req, res) {
+        console.log('create bug',req.body)
+        const newbug = await new bug(req.body).save();
+        return res.status(200).json({ success: true, data: newbug, message: "New UserActivity Created" });
+    }
 
     async list(req, res) {
         let list = await bug.find({ to_id: req.body.to_id })
@@ -80,15 +83,15 @@ class BugController {
 // }
 
 
-async create(req, res) {
-    const newbug = await new bug({
-        to_id: req.body.to_id,
-        bug_no : Math.floor((Math.random() * 100) + 1),
-        name: req.body.name
-        }).save();
-        console.log(newbug,'newbug console')
-    return res.status(200).json({ success: true, data: newbug, message: "New UserActivity Created" });
-}
+// async create(req, res) {
+//     const newbug = await new bug({
+//         to_id: req.body.to_id,
+//         bug_no : Math.floor((Math.random() * 100) + 1),
+//         name: req.body.name
+//         }).save();
+//         console.log(newbug,'newbug console')
+//     return res.status(200).json({ success: true, data: newbug, message: "New UserActivity Created" });
+// }
 
 // 29.11.2022 
 // 1) populate the to_id from the list response
@@ -103,6 +106,34 @@ async findById(req, res) {
 // 2) Changes in random number
 
 
+/*
+async getNextSequenceValue(sequenceName){
+    var sequenceDocument = await bug.findAndModify({
+       query:{bug_no: sequenceName },
+       update: {$inc:{sequence_value:1}},
+       new:true
+    });
+    console.log(sequenceDocument.sequence_value,'hai');
+ }
+
+async insert(req,res){
+    var insert= await bug.insert({
+        "bug_no":getNextSequenceValue("bug_no"),
+    })
+    return res.status(200).json({ success: true, data: insert, message: "insert" })
+
+}
+*/
+// 30/11/2022 
+async listed(req, res) {
+    let list = await bug.find({}).sort({bug_no:-1})
+    let count = await bug.find().countDocuments()
+    let output = {
+        list,
+        count,
+    }
+    return res.status(200).json({ success: true, data: output, message: "bug number listed" });
+}
 
 }
 

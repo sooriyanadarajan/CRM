@@ -1,5 +1,12 @@
+
+// import { nanoid } from 'nanoid/async';
+// const nanoid = require('nanoid')
+var { nanoid } = require("nanoid");
+// var ID = nanoid();
+
 const mongoose = require('mongoose');
 const { devNull } = require('os');
+// const nanoid  = require('nanoid');
 
 var bugSchema = mongoose.Schema({
 
@@ -17,8 +24,10 @@ var bugSchema = mongoose.Schema({
         type: Array,
     },
     bug_no:{
-        type:Number,
-        default:1
+        type: Number,
+        default: 0
+        // default: () => nanoid(1),
+        // index: { unique: true },
     },
     File:{
         type:String
