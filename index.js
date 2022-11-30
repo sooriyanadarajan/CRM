@@ -13,6 +13,7 @@ const meeetingRouter = require('./routers/meeting')
 const leaveRouter = require('./routers/leave')
 const bugRouter = require('./routers/bug')
 const roleRouter = require('./routers/role')
+var cookieParser = require('cookie-parser')
 
 const app = express()
 app.use(express.json())
@@ -32,7 +33,7 @@ app.use(function (req, res, next) {
     next();
 })
 app.use(useragent.express())
-
+app.use(cookieParser())
 app.use(userRouter);
 app.use(userActivityRouter);
 app.use(adminRouter);

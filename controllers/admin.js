@@ -12,9 +12,8 @@ class AdminController {
     }
 
     async login (req, res){ 
-      console.log(req.body,'body data')
         const admin = await Admin.findOne({email:req.body.email, password:req.body.password});
-        console.log(admin,'admin')
+      if(admin){
         const u = req.useragent;
         let data = await new AdminActivity({
           devicename: os.hostname(),
@@ -24,15 +23,12 @@ class AdminController {
           version: u.version
       }).save();
       console.log(data,'data')
-
-        // if (admin) {
-            
-        //   const token = await admin.generateAuthToken();
-        //   return res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 24 * 15, httpOnly: false }).json({ success: true, data: admin, message: 'Login Successful' })
-        // } else {
-        //   return res.status(401).send({ success: false, message: 'Invalid Credentials' })
-        // }
-        return res.status(200).send({ success: true, data:data, message: 'Login Success' })
+          const token = await admin.generateAuthToken();
+          console.log(token,'token')
+          return res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 24 * 15, httpOnly: false }).json({ success: true, data: admin, message: 'Login Successful' })
+        } else {
+          return res.status(401).send({ success: false, message: 'Invalid Credentials' })
+        }
       }
       
       async logout(req, res) {

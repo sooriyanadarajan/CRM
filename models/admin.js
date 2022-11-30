@@ -38,14 +38,14 @@ var adminSchema = mongoose.Schema({
 
 
 // Sign JWT and return
-// adminSchema.methods.generateAuthToken = async function () {
-//   const admin = this
-//   const token = await jwt.sign({ _id: admin._id.toString() }, process.env.JWT_SECRET, {
-//     expiresIn: process.env.JWT_EXPIRE
-//   })
-//   //console.log(token)
-//   return token
-// }
+adminSchema.methods.generateAuthToken = async function () {
+  const admin = this
+  const token = await jwt.sign({ _id: admin._id.toString() }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE
+  })
+  //console.log(token)
+  return token
+}
 
 let Admin = mongoose.model('admin', adminSchema);
 
