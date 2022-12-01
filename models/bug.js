@@ -11,18 +11,18 @@ var bugSchema = mongoose.Schema({
 
     name: {
         type: String,
-        required: true
+        // required: true
     }, 
     from_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
-        required:true
+        // required:true
     },
     to_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
         type: Array,
-        required:true
+        // required:true
     },
     bug_no:{
         type: Number,
@@ -45,11 +45,11 @@ var bugSchema = mongoose.Schema({
     project_id:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'project',
-        required:true
+        // required:true
     },
     date:{
         type:Date,
-        required:true
+        // required:true
     },
     duration:{
         type:String

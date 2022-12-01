@@ -1,4 +1,5 @@
-const bug = require('../models/bug')
+const bug = require('../models/bug');
+const BugActivity = require('../models/bugactivity');
 // const{ nanoid } = require("nanoid");
 
 class BugController {
@@ -7,13 +8,23 @@ class BugController {
         console.log('create bug',req.body)
         const newbug = await new bug(req.body).save();
 
-        return res.status(200).json({ success: true, data: newbug, message: "New UserActivity Created" });
+        let data = await new BugActivity({
+            action: req.body.action,
+            createdOn: req.body.createdOn,
+            updatedOn: req.body.updateOn,
+            createdBy:req.body.createdBy, 
+            updatedBy:req.body.updatedBy,
+            status:req.body.status,
+            bug_no:req.body.bug_no,
+            bug_id:req.body.bug_id
+        }).save();
+        console.log(data)
+        return res.status(200).json({ success: true, data: data, message: "New UserActivity Created" });
     }
 
     async list(req, res) {
         let list = await bug.find({ to_id: req.body.to_id })
         let count = await bug.find({ to_id: req.body.to_id }).countDocuments()
-
         let output = {
             list,
             count,
@@ -28,7 +39,17 @@ class BugController {
 
     async update(req, res) {
         let update = await bug.updateOne()
-
+        let data = await new BugActivity({
+            action: req.body.action,
+            createdOn: req.body.createdOn,
+            updatedOn: req.body.updateOn,
+            createdBy:req.body.createdBy, 
+            updatedBy:req.body.updatedBy,
+            status:req.body.status,
+            bug_no:req.body.bug_no,
+            bug_id:req.body.bug_id
+        }).save();
+        console.log(data)
         return res.status(200).json({ success: true, data: update, message: "new UserActivity updated" });
     }
 
@@ -39,10 +60,20 @@ class BugController {
     }
 
     // 24.11.2022 // to based list fetch
-    async list(req, res) {
+    async listid(req, res) {
         let list = await bug.find({ to_id: req.body.to_id })
         let count = await bug.find({ to_id: req.body.to_id }).countDocuments()
-
+        let data = await new BugActivity({
+            action: req.body.action,
+            createdOn: req.body.createdOn,
+            updatedOn: req.body.updateOn,
+            createdBy:req.body.createdBy, 
+            updatedBy:req.body.updatedBy,
+            status:req.body.status,
+            bug_no:req.body.bug_no,
+            bug_id:req.body.bug_id
+        }).save();
+        console.log(data)
         let output = {
             list,
             count,
@@ -51,7 +82,7 @@ class BugController {
     }
 
     //  24.11.2022  update status of bug
-    async update(req, res) {
+    async updatestatus(req, res) {
         console.log('this update working')
         let update = await bug.updateOne({ user_id: req.body.user_id, bug_no: req.body.bug_no }, { status: req.body.status })
         return res.status(200).json({ success: true, data: update, message: "new UserActivity updated" });
@@ -62,15 +93,25 @@ class BugController {
 
     //  1) update without userid
 
-    async update(req, res) {
-        
+    async updateBugActivity(req, res) {
+        let data = await new BugActivity({
+            action: req.body.action,
+            createdOn: req.body.createdOn,
+            updatedOn: req.body.updateOn,
+            createdBy:req.body.createdBy, 
+            updatedBy:req.body.updatedBy,
+            status:req.body.status,
+            bug_no:req.body.bug_no,
+            bug_id:req.body.bug_id
+        }).save();
+        console.log(data)
         let update = await bug.updateOne({ bug_no: req.body.bug_no }, { status: req.body.status })
         return res.status(200).json({ success: true, data: update, message: 'status changed' })
 
     }
     // 2) assign the bug to multiple user by using update method
 
-    async update(req, res) {
+    async updatebug(req, res) {
         let update = await bug.updateOne({ bug_no: req.body.bug_no }, { to_id: req.body.to_id })
         return res.status(200).json({ success: true, data: update, message: 'status changed' })
     }
@@ -148,7 +189,7 @@ async createPin(req, res) {
         project_id:req.body. project_id,
         date:req.body.date        
     }).save();
-    
+    console.log(data)
     return res.status(200).json({ success: true, data: newbug, message: "New UserActivity Created" });
 }
 }

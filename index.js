@@ -5,7 +5,6 @@ const useragent = require('express-useragent')
 const userRouter = require('./routers/user')
 const userActivityRouter = require('./routers/userActivity')
 const adminRouter = require('./routers/admin')
-const AdminactivityRouter=require('./routers/adminactivity')
 const teamRouter = require('./routers/team')
 const projectRouter=require('./routers/project')
 const taskRouter = require('./routers/task')
@@ -37,7 +36,6 @@ app.use(cookieParser())
 app.use(userRouter);
 app.use(userActivityRouter);
 app.use(adminRouter);
-app.use(AdminactivityRouter);
 app.use(teamRouter);
 app.use(projectRouter);
 app.use(taskRouter);
