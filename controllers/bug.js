@@ -6,6 +6,7 @@ class BugController {
     async create(req, res) {
         console.log('create bug',req.body)
         const newbug = await new bug(req.body).save();
+
         return res.status(200).json({ success: true, data: newbug, message: "New UserActivity Created" });
     }
 
@@ -27,6 +28,7 @@ class BugController {
 
     async update(req, res) {
         let update = await bug.updateOne()
+
         return res.status(200).json({ success: true, data: update, message: "new UserActivity updated" });
     }
 
@@ -61,6 +63,7 @@ class BugController {
     //  1) update without userid
 
     async update(req, res) {
+        
         let update = await bug.updateOne({ bug_no: req.body.bug_no }, { status: req.body.status })
         return res.status(200).json({ success: true, data: update, message: 'status changed' })
 

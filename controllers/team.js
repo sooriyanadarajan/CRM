@@ -26,7 +26,9 @@ class Team {
     }
 
     async delete(req, res) {
-        let remove = await team.deleteOne({team_id:req.body.team_id},)
+        let remove = await team.deleteOne (
+            { _id: req.body._id},
+            { $pop  : { members: req.body.members } })
         return res.status(200).json({ success: true, data: remove, message: "new UserActivity updated" });
     } 
 
@@ -38,7 +40,13 @@ class Team {
             { $push: { members: req.body.members } })
         return res.status(200).json({ success: true, data: update, message: "new UserActivity updated" });
     }
-
+// 30/11/2022 api for deleting members in the team
+async updatemember1(req, res) {
+    let update = await  team.updateOne(
+        { _id: req.body._id},
+        { $pop: { members: -1 } })
+    return res.status(200).json({ success: true, data: update, message: "new UserActivity updated" });
+}
 
 }
 
