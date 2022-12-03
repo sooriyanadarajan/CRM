@@ -3,10 +3,9 @@ const express = require('express')
 require('./config/db')
 const useragent = require('express-useragent')
 const userRouter = require('./routers/user')
-const userActivityRouter = require('./routers/userActivity')
 const adminRouter = require('./routers/admin')
 const teamRouter = require('./routers/team')
-const projectRouter=require('./routers/project')
+const projectRouter = require('./routers/project')
 const taskRouter = require('./routers/task')
 const meeetingRouter = require('./routers/meeting')
 const leaveRouter = require('./routers/leave')
@@ -33,16 +32,15 @@ app.use(function (req, res, next) {
 })
 app.use(useragent.express())
 app.use(cookieParser())
-app.use(userRouter);
-app.use(userActivityRouter);
-app.use(adminRouter);
-app.use(teamRouter);
-app.use(projectRouter);
-app.use(taskRouter);
-app.use(meeetingRouter);
-app.use(leaveRouter);
-app.use(bugRouter);
-app.use(roleRouter);
+app.use('/user', userRouter);
+app.use('/admin', adminRouter);
+app.use('/team', teamRouter);
+app.use('/project', projectRouter);
+app.use('/task', taskRouter);
+app.use('/meeting', meeetingRouter);
+app.use('/leave', leaveRouter);
+app.use('/bug', bugRouter);
+app.use('/role', roleRouter);
 
 
 

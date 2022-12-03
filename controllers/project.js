@@ -9,7 +9,8 @@ class ProjectController {
     }
 
     async list(req, res) {
-        let list = await Project.find({ name: { $regex: req.body.name, $options: 'i' } }).skip((req.body.pageNumber - 1) * req.body.limit).limit(req.body.limit)
+        let list = await Project.find({ name: { $regex: req.body.name, $options: 'i' } })
+            .skip((req.body.page - 1) * req.body.limit).limit(req.body.limit)
         let count = await Project.find({ name: { $regex: req.body.name, $options: 'i' } }).countDocuments();
         let output = {
             list,
@@ -25,31 +26,22 @@ class ProjectController {
         };
         let thing = await Project.updateOne(query, updateDocument);
 
-        return res.status(200).json({ success: true, data: thing, message: "Task updated!" });
+        return res.status(200).json({ success: true, data: thing, message: "Project updated!" });
     }
 
     async delete(req, res) {
-        const query = { name: req.body.dname };
-        console.log(query, 'query')
-        let doc = await Project.deleteOne(query);
-
-        return res.status(200).json({ success: true, data: doc, message: "Task deleted!" });
+        let doc = await Project.findOne({ name: req.params.pname })
+        doc.deleted = true
+        await doc.save()
+        return res.status(200).json({ success: true, data: doc, message: "Project deleted!" });
     }
 
-    // 30/11/2022 team_id api
-    async findById(req, res) {
-        let findById = await Project.findById({_id: req.body._id} )
+    async findProject(req, res) {
+        let data = await Project.findById({ _id: req.params.id })
             .populate(['team_id'])
-            .populate(['projectlead'])
-        return res.status(200).json({ success: true, data: findById, message: "populated" })
+            .populate(['lead_id'])
+        return res.status(200).json({ success: true, data: data, message: "Project details listed" })
     }
- // 30/11/2022 projectLead api
-
- //     async findById1(req, res) {
- //         let findById = await Project.findById({_id: req.body._id} )
- //             .populate(['projectlead'])
- //         return res.status(200).json({ success: true, data: findById, message: "populated" })
- //     }
 }
 
 module.exports = ProjectController

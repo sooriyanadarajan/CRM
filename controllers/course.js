@@ -10,7 +10,7 @@ class CourseController {
     }
 
     async list(req, res) {
-        let list = await Course.find({}).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit)
+        let list = await Course.find({}).skip(req.body.page > 0 ? ((req.body.page - 1) * req.body.limit) : 0).limit(req.body.limit)
         let count = await Course.find({}).countDocuments()
 
         let output = {
@@ -22,7 +22,7 @@ class CourseController {
 
     async find(req, res) {
         let find = await Course.find()
-            .populate(['project_id', 'admin_id', 'user_id']).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit)
+            .populate(['project_id', 'admin_id', 'user_id']).skip(req.body.page > 0 ? ((req.body.page - 1) * req.body.limit) : 0).limit(req.body.limit)
             .exec()
         return res.status(200).json({ success: true, data: find, message: 'populate' })
 

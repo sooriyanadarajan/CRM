@@ -11,7 +11,7 @@ class LeaveController {
 
     async list(req, res) {
 
-        let list = await leave.find({}).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit);
+        let list = await leave.find({}).skip(req.body.page > 0 ? ((req.body.page - 1) * req.body.limit) : 0).limit(req.body.limit);
         let count = await leave.find({}).countDocuments()
 
         let output = {

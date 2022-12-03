@@ -9,8 +9,9 @@ class MeetingController {
     }
 
     async list(req, res) {
-        let list = await Meeting.find({ deleted: false });
-        let count = await Meeting.find({ deleted: false }).countDocuments();
+        let list = await Meeting.find({ organisedby: req.user.id, deleted: false })
+            .skip((req.body.page - 1) * req.body.limit).limit(req.body.limit)
+        let count = await Meeting.find({ organisedby: req.user.id, deleted: false }).countDocuments();
         let output = {
             list,
             count,
@@ -21,7 +22,6 @@ class MeetingController {
     async update(req, res) {
         const filter = { organisedby: req.body.organisedby };
         const update = { subject: req.body.subject };
-        console.log(update, filter, 'sfilje')
         let doc = await Meeting.findOneAndUpdate(filter, update, {
             returnOriginal: false
         });
@@ -29,21 +29,16 @@ class MeetingController {
     }
 
     async delete(req, res) {
-        const filter = { organisedby: req.body.organisedby };
-        const update = { deleted: true };
-        let doc = await Meeting.findOneAndUpdate(filter, update, {
-            returnOriginal: false
-        });
-        return res.status(200).json({ success: true, data: doc, message: "Meeting Listed deleted!" });
+        let doc = await Meeting.findOne({ _id: req.body.id })
+        doc.deleted = true
+        await doc.save()
+        return res.status(200).json({ success: true, data: doc, message: "Meeting deleted!" });
     }
+
     async changeStatus(req, res) {
-        const data =  await Meeting.findOne({ subject: req.body.subject})
+        const data = await Meeting.findOne({ _id: req.body.id })
         data.status = !data.status
         data.save();
-        // const filter = { organisedby: req.body.organisedby };
-        // const update = { status: !status.status};
-        // let doc = await Meeting.findOneAndUpdate(filter, update, {
-        //     returnOriginal: false
         return res.status(200).json({ success: true, data: data, message: "Meeting Listed status update!" });
     }
 

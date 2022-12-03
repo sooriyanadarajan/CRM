@@ -5,7 +5,7 @@ var projectSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    projectlead:{
+    lead_id:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },

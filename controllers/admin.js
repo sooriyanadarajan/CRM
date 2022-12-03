@@ -5,7 +5,7 @@ const AdminActivity = require('../models/adminactivity');
 class AdminController {
     constructor() { }
 
-    async create(req, res) {
+    async register(req, res) {
         const admin = await new Admin(req.body).save();
           
         return res.status(200).json({ success: true, data: admin, message: "New Admin Created" });

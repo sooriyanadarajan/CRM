@@ -9,11 +9,11 @@ var teamSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:'user'
     }],
-    teamLeader: {
+    lead_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref:'user'
     },
-    reportingPerson: {
+    reporting_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref:'user'
     },
