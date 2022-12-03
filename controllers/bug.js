@@ -39,17 +39,6 @@ class BugController {
 
     async update(req, res) {
         let update = await bug.updateOne()
-        let data = await new BugActivity({
-            action: req.body.action,
-            createdOn: req.body.createdOn,
-            updatedOn: req.body.updateOn,
-            createdBy:req.body.createdBy, 
-            updatedBy:req.body.updatedBy,
-            status:req.body.status,
-            bug_no:req.body.bug_no,
-            bug_id:req.body.bug_id
-        }).save();
-        console.log(data)
         return res.status(200).json({ success: true, data: update, message: "new UserActivity updated" });
     }
 
@@ -82,10 +71,29 @@ class BugController {
     }
 
     //  24.11.2022  update status of bug
-    async updatestatus(req, res) {
-        console.log('this update working')
+    async updatestatus(req, res) { 
+        // let data = await new BugActivity({
+        //     action:x,
+        //     createdBy:req.body.createdBy, 
+        //     updatedBy:req.body.updatedBy,
+        //     bug_no:req.body.bug_no,
+        //     bug_id:req.body.bug_id
+        // }).save();
+        // console.log(data)
+        // let x= bug.status
+        // console.log(x)
         let update = await bug.updateOne({ user_id: req.body.user_id, bug_no: req.body.bug_no }, { status: req.body.status })
-        return res.status(200).json({ success: true, data: update, message: "new UserActivity updated" });
+        let x= req.body.status
+        console.log(x)
+        let data = await new BugActivity({
+            action:x,
+            createdBy:req.body.createdBy, 
+            updatedBy:req.body.updatedBy,
+            bug_no:req.body.bug_no,
+            bug_id:req.body.bug_id
+        }).save();
+        console.log(data)
+        return res.status(200).json({ success: true, data: data, message: "new UserActivity updated" });
     }
 
     //28.11.22
