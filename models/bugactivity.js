@@ -21,7 +21,7 @@ var BugActivitySchema = mongoose.Schema({
         ref: 'user',
     },
     status:{
-        type:Boolean,
+        type:String,
     },
     bug_no:{
         type:Number,
