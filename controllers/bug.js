@@ -7,9 +7,22 @@ class BugController {
     async create(req, res) {
         console.log('create bug',req.body)
         const newbug = await new bug(req.body).save();
-
+        let bugNo= req.body.action
+        console.log(bugNo)
+        let bugAction = ""
+        if(bugNo ===0){
+          bugAction = 'created'
+        }else if(bugNo ===1){
+          bugAction = 'open'
+        }else if(bugNo ===2){
+          bugAction ='onhold'
+        }else if(bugNo ===3){
+          bugAction ='not a bug'
+        }else if (bugNo ===4){
+          bugAction ='completed'
+        }
         let data = await new BugActivity({
-            action: req.body.action,
+            action: bugAction,
             createdOn: req.body.createdOn,
             updatedOn: req.body.updateOn,
             createdBy:req.body.createdBy, 
@@ -52,6 +65,7 @@ class BugController {
     async listid(req, res) {
         let list = await bug.find({ to_id: req.body.to_id })
         let count = await bug.find({ to_id: req.body.to_id }).countDocuments()
+        
         let data = await new BugActivity({
             action: req.body.action,
             createdOn: req.body.createdOn,
@@ -85,14 +99,26 @@ class BugController {
         let update = await bug.updateOne({ user_id: req.body.user_id, bug_no: req.body.bug_no }, { status: req.body.status })
         let x= req.body.status
         console.log(x)
+        let bugAction = ""
+        if(x ===0){
+          bugAction = 'created'
+        }else if(x ===1){
+          bugAction = 'open'
+        }else if(x ===2){
+          bugAction ='onhold'
+        }else if(x ===3){
+          bugAction ='not a bug'
+        }else if (x ===4){
+          bugAction ='completed'
+        }
+        
         let data = await new BugActivity({
-            action:x,
+            action:bugAction,
             createdBy:req.body.createdBy, 
             updatedBy:req.body.updatedBy,
             bug_no:req.body.bug_no,
             bug_id:req.body.bug_id
         }).save();
-        console.log(data)
         return res.status(200).json({ success: true, data: data, message: "new UserActivity updated" });
     }
 
@@ -200,7 +226,11 @@ async createPin(req, res) {
     console.log(data)
     return res.status(200).json({ success: true, data: newbug, message: "New UserActivity Created" });
 }
+
+async listedorder(req, res) {
+    let list = await bug.find({bug_id:req.body.bug_id}).select("status")
+    console.log(list)
+    return res.status(200).json({ success: true, data: list , message: "bug order listed" });
 }
-
-
+}
 module.exports = BugController

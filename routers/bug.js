@@ -17,5 +17,6 @@ router.post('/bug/updateBugActivity',asyncHandler(bug.updateBugActivity))
 // router.post('/bug/bugno',asyncHandler(bug.getNextSequenceValue))
 router.post('/bug/findbyid',asyncHandler(bug.findById))
 router.post('/bug/listed',asyncHandler(bug.listed))
+router.post('/bug/listedorder',asyncHandler(bug.listedorder))
 router.post('/bug/createPin',asyncHandler(bug.createPin))
 module.exports = router
