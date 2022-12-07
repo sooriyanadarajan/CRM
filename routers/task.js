@@ -9,6 +9,7 @@ const router = express.Router()
 
 router.post('/task/create', asyncHandler(taskController.create))
 router.post('/task/list', asyncHandler(taskController.list))
+router.post('/task/find', asyncHandler(taskController.find))
 router.patch('/task/update', asyncHandler(taskController.update))
 router.post('/task/change', asyncHandler(taskController.change))
 router.post('/task/delete', asyncHandler(taskController.delete))

@@ -55,7 +55,7 @@ var bugSchema = mongoose.Schema({
         type:String
     },
     status: {
-        type: String,
+        type:Number,
         default: 0
     },
     //0 - created, 1 - open, 2 - onhold, 3 - not a bug , 4 -completed

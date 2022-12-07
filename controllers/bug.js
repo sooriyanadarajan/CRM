@@ -1,6 +1,8 @@
 const bug = require('../models/bug');
 const BugActivity = require('../models/bugactivity');
+const user = require('../models/user');
 // const{ nanoid } = require("nanoid");
+// const {ObjectId} = require('mongodb')
 
 class BugController {
     constructor() {}
@@ -23,8 +25,8 @@ class BugController {
         }
         let data = await new BugActivity({
             action: bugAction,
-            createdOn: req.body.createdOn,
-            updatedOn: req.body.updateOn,
+            // createdOn: new Date(Date.now()),
+            // updatedOn: req.body.updateOn,
             createdBy:req.body.createdBy, 
             updatedBy:req.body.updatedBy,
             status:req.body.status,
@@ -68,8 +70,6 @@ class BugController {
         
         let data = await new BugActivity({
             action: req.body.action,
-            createdOn: req.body.createdOn,
-            updatedOn: req.body.updateOn,
             createdBy:req.body.createdBy, 
             updatedBy:req.body.updatedBy,
             status:req.body.status,
@@ -96,30 +96,34 @@ class BugController {
         // console.log(data)
         // let x= bug.status
         // console.log(x)
-        let update = await bug.updateOne({ user_id: req.body.user_id, bug_no: req.body.bug_no }, { status: req.body.status })
+        let update = await bug.updateOne({ bug_id: req.body.bug_id }, { status: req.body.status })
+        console.log(req.body.bug_id )
         let x= req.body.status
         console.log(x)
-        let bugAction = ""
-        if(x ===0){
-          bugAction = 'created'
-        }else if(x ===1){
-          bugAction = 'open'
-        }else if(x ===2){
-          bugAction ='onhold'
-        }else if(x ===3){
-          bugAction ='not a bug'
-        }else if (x ===4){
-          bugAction ='completed'
-        }
+        console.log(update)
+        let bugAction;
+        // if(x ===0){
+        //   bugAction = 'created'
+        // }else if(x ===1){
+        //   bugAction = 'open'
+        // }else if(x ===2){
+        //   bugAction ='onhold'
+        // }else if(x ===3){
+        //   bugAction ='not a bug'
+        // }else if (x ===4){
+        //   bugAction ='completed'
+        // }
+        ((x===0)?bugAction="created":(x===1)?bugAction="open":(x===2)?bugAction="onhold":(x===3)?bugAction="notabug":(x===4)?bugAction="completed":{})
         
         let data = await new BugActivity({
             action:bugAction,
             createdBy:req.body.createdBy, 
             updatedBy:req.body.updatedBy,
             bug_no:req.body.bug_no,
-            bug_id:req.body.bug_id
+            bug_id:req.body.bug_id,
+            status:req.body.status
         }).save();
-        return res.status(200).json({ success: true, data: data, message: "new UserActivity updated" });
+        return res.status(200).json({ success: true, data: data,update, message: "new UserActivity updated" });
     }
 
     //28.11.22
@@ -130,8 +134,6 @@ class BugController {
     async updateBugActivity(req, res) {
         let data = await new BugActivity({
             action: req.body.action,
-            createdOn: req.body.createdOn,
-            updatedOn: req.body.updateOn,
             createdBy:req.body.createdBy, 
             updatedBy:req.body.updatedBy,
             status:req.body.status,
@@ -227,10 +229,44 @@ async createPin(req, res) {
     return res.status(200).json({ success: true, data: newbug, message: "New UserActivity Created" });
 }
 
-async listedorder(req, res) {
-    let list = await bug.find({bug_id:req.body.bug_id}).select("status")
+   async listedorder(req, res) {
+    let list =  (await BugActivity.find({bug_no:req.body.bug_no}).populate({
+        path: 'bug_id',
+        populate: { path: 'from_id' }})
+        .populate({
+            path: 'bug_id',
+            populate: { path: 'to_id' }
+        })
+        .populate({
+            path: 'bug_id',
+            populate: { path: 'project_id' }
+        })
+    )
+    
+    // .reverse([BugActivity.action])
+    // let listed =  (await BugActivity.find({bug_id:req.body.bug_id}).populate(["bug_id"])).reverse([BugActivity.action])
+
+    
+            // let table = await bug.aggregate(
+            //     [
+            //         {
+            //             $match:{ from_id: ObjectId(req.body.from_id)}
+            //         },
+            //         {
+            //             $lookup:{
+            //                 from:"users",
+            //                 localField:"from_id",
+            //                 foreignField:"_id",
+            //                 as:"user details"
+            //             }
+            //         },
+        
+                    
+            //     ]
+            // )
+         
     console.log(list)
-    return res.status(200).json({ success: true, data: list , message: "bug order listed" });
+    return res.status(200).json({ success: true, data:list,message: "bug order listed" });
 }
 }
 module.exports = BugController
