@@ -10,8 +10,20 @@ class CourseController {
     }
 
     async list(req, res) {
-        let list = await Course.find({}).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit)
-        let count = await Course.find({}).countDocuments()
+        let list = await Course.find(({
+            $or: [{ "name": { $regex: `${req.body.name}`, $options: 'i' } },
+            { "from": { $regex: `${req.body.role}`, $options: 'i' } },
+            { "to": { $regex: `${req.body.email}`, $options: 'i' } },
+            { "date": { $regex: `${req.body.email}`, $options: 'i' } }
+            ]
+        })).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit)
+        let count = await Course.find({
+            $or: [{ "name": { $regex: `${req.body.name}`, $options: 'i' } },
+            { "from": { $regex: `${req.body.role}`, $options: 'i' } },
+            { "to": { $regex: `${req.body.email}`, $options: 'i' } },
+            { "date": { $regex: `${req.body.email}`, $options: 'i' } }
+            ]
+        }).countDocuments()
 
         let output = {
             list,

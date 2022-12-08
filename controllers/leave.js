@@ -11,8 +11,34 @@ class LeaveController {
 
     async list(req, res) {
 
-        let list = await leave.find({}).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit);
-        let count = await leave.find({}).countDocuments()
+        let list = await leave.find({
+            $or: [
+            { "from_id": { $regex: `${req.body.role}`, $options: 'i' } },
+            { "to_id": { $regex: `${req.body.email}`, $options: 'i' } },
+            { "reason": { $regex: `${req.body.name}`, $options: 'i' } },
+            { "type": { $regex: `${req.body.name}`, $options: 'i' } },
+            { "leaveStatus": { $regex: `${req.body.email}`, $options: 'i' } },
+            { "cc": { $regex: `${req.body.email}`, $options: 'i' } },
+            { "date": { $regex: `${req.body.email}`, $options: 'i' } },
+            { "status": { $regex: `${req.body.email}`, $options: 'i' } },
+            { "from": { $regex: `${req.body.role}`, $options: 'i' } },
+            { "to": { $regex: `${req.body.email}`, $options: 'i' } }
+            ]
+        }).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit);
+        let count = await leave.find({
+            $or: [
+            { "from_id": { $regex: `${req.body.role}`, $options: 'i' } },
+            { "to_id": { $regex: `${req.body.email}`, $options: 'i' } },
+            { "reason": { $regex: `${req.body.name}`, $options: 'i' } },
+            { "type": { $regex: `${req.body.name}`, $options: 'i' } },
+            { "leaveStatus": { $regex: `${req.body.email}`, $options: 'i' } },
+            { "cc": { $regex: `${req.body.email}`, $options: 'i' } },
+            { "date": { $regex: `${req.body.email}`, $options: 'i' } },
+            { "status": { $regex: `${req.body.email}`, $options: 'i' } },
+            { "from": { $regex: `${req.body.role}`, $options: 'i' } },
+            { "to": { $regex: `${req.body.email}`, $options: 'i' } }
+            ]
+        }).countDocuments()
 
         let output = {
             list,

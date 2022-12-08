@@ -9,8 +9,30 @@ class TaskController {
     }
 
     async list(req, res) {
-        let list = await Task.find({}).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit)
-        let count = await Task.find({}).countDocuments()
+        let list = await Task.find({
+            $or:
+                [
+                    { "name": { $regex: `${req.body.name}`, $options: 'i' } },
+                    { "from_id": { $regex: `${req.body.role}`, $options: 'i' } },
+                    { "to_id": { $regex: `${req.body.email}`, $options: 'i' } },
+                    { "project_id": { $regex: `${req.body.email}`, $options: 'i' } },
+                    { "team_id": { $regex: `${req.body.email}`, $options: 'i' } },
+                    { "active": { $regex: `${req.body.email}`, $options: 'i' } },
+                    { "status": { $regex: `${req.body.email}`, $options: 'i' } }
+                ]
+        }).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit)
+        let count = await Task.find({
+            $or:
+                [
+                    { "name": { $regex: `${req.body.name}`, $options: 'i' } },
+                    { "from_id": { $regex: `${req.body.role}`, $options: 'i' } },
+                    { "to_id": { $regex: `${req.body.email}`, $options: 'i' } },
+                    { "project_id": { $regex: `${req.body.email}`, $options: 'i' } },
+                    { "team_id": { $regex: `${req.body.email}`, $options: 'i' } },
+                    { "active": { $regex: `${req.body.email}`, $options: 'i' } },
+                    { "status": { $regex: `${req.body.email}`, $options: 'i' } }
+                ]
+        }).countDocuments()
 
         let output = {
             list,

@@ -9,8 +9,27 @@ class ProjectController {
     }
 
     async list(req, res) {
-        let list = await Project.find({ name: { $regex: req.body.name, $options: 'i' } }).skip((req.body.pageNumber - 1) * req.body.limit).limit(req.body.limit)
-        let count = await Project.find({ name: { $regex: req.body.name, $options: 'i' } }).countDocuments();
+        let list = await Project.find(({
+            $or:
+                [
+                    { "name": { $regex: `${req.body.name}`, $options: 'i' } },
+                    { "projectlead": { $regex: `${req.body.email}`, $options: 'i' } },
+                    { "team_id": { $regex: `${req.body.email}`, $options: 'i' } },
+                    { "expiry": { $regex: `${req.body.email}`, $options: 'i' } },
+                    { "status": { $regex: `${req.body.email}`, $options: 'i' } }
+                ]
+        })
+        ).skip((req.body.pageNumber - 1) * req.body.limit).limit(req.body.limit)
+        let count = await Project.find(({
+            $or:
+                [
+                    { "name": { $regex: `${req.body.name}`, $options: 'i' } },
+                    { "projectlead": { $regex: `${req.body.email}`, $options: 'i' } },
+                    { "team_id": { $regex: `${req.body.email}`, $options: 'i' } },
+                    { "expiry": { $regex: `${req.body.email}`, $options: 'i' } },
+                    { "status": { $regex: `${req.body.email}`, $options: 'i' } }
+                ]
+        })).countDocuments();
         let output = {
             list,
             count
@@ -38,18 +57,18 @@ class ProjectController {
 
     // 30/11/2022 team_id api
     async findById(req, res) {
-        let findById = await Project.findById({_id: req.body._id} )
+        let findById = await Project.findById({ _id: req.body._id })
             .populate(['team_id'])
             .populate(['projectlead'])
         return res.status(200).json({ success: true, data: findById, message: "populated" })
     }
- // 30/11/2022 projectLead api
+    // 30/11/2022 projectLead api
 
- //     async findById1(req, res) {
- //         let findById = await Project.findById({_id: req.body._id} )
- //             .populate(['projectlead'])
- //         return res.status(200).json({ success: true, data: findById, message: "populated" })
- //     }
+    //     async findById1(req, res) {
+    //         let findById = await Project.findById({_id: req.body._id} )
+    //             .populate(['projectlead'])
+    //         return res.status(200).json({ success: true, data: findById, message: "populated" })
+    //     }
 }
 
 module.exports = ProjectController

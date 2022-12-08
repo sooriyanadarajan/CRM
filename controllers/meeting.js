@@ -9,8 +9,24 @@ class MeetingController {
     }
 
     async list(req, res) {
-        let list = await Meeting.find({ deleted: false });
-        let count = await Meeting.find({ deleted: false }).countDocuments();
+        let list = await Meeting.find({
+            $or: [
+                { "organisedby": { $regex: `${req.body.role}`, $options: 'i' } },
+                { "from_time": { $regex: `${req.body.email}`, $options: 'i' } },
+                { "to_time": { $regex: `${req.body.name}`, $options: 'i' } },
+                { "members": { $regex: `${req.body.name}`, $options: 'i' } },
+                { "subject": { $regex: `${req.body.email}`, $options: 'i' } }
+            ]
+        }).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit);
+        let count = await Meeting.find({
+            $or: [
+                { "organisedby": { $regex: `${req.body.role}`, $options: 'i' } },
+                { "from_time": { $regex: `${req.body.email}`, $options: 'i' } },
+                { "to_time": { $regex: `${req.body.name}`, $options: 'i' } },
+                { "members": { $regex: `${req.body.name}`, $options: 'i' } },
+                { "subject": { $regex: `${req.body.email}`, $options: 'i' } }
+            ]
+        }).countDocuments();
         let output = {
             list,
             count,
@@ -37,7 +53,7 @@ class MeetingController {
         return res.status(200).json({ success: true, data: doc, message: "Meeting Listed deleted!" });
     }
     async changeStatus(req, res) {
-        const data =  await Meeting.findOne({ subject: req.body.subject})
+        const data = await Meeting.findOne({ subject: req.body.subject })
         data.status = !data.status
         data.save();
         // const filter = { organisedby: req.body.organisedby };

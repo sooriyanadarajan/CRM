@@ -37,8 +37,15 @@ class AdminController {
       }
 
     async list(req, res) {
-        let list = await Admin.find({deleted:false});
-        let count = await await Admin.find({deleted:false}).countDocuments();
+      let list = await Admin.find({$or :[{"name": { $regex: `${req.body.name}`, $options: 'i' }},
+      {"role": { $regex: `${req.body.role}`, $options: 'i' }},
+      {"email": { $regex: `${req.body.email}`, $options: 'i' }},
+      {"password": { $regex: `${req.body.email}`, $options: 'i' }}
+    ]}).skip(req.body.pageNumber > 0 ? ((req.body.pageNumber - 1) * req.body.limit) : 0).limit(req.body.limit);
+        let count = await await Admin.find({$or :[{"name": { $regex: `${req.body.name}`, $options: 'i' }},
+      {"role": { $regex: `${req.body.role}`, $options: 'i' }},
+      {"email": { $regex: `${req.body.email}`, $options: 'i' }},
+      {"password": { $regex: `${req.body.email}`, $options: 'i' }}]}).countDocuments();
         let output = {
             list,
             count,
